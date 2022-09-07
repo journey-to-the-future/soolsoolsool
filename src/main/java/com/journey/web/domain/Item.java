@@ -24,5 +24,5 @@ public class Item {
     private int size;       // 규격, 사이즈
     private String company; // 제조사
 
-//    private List<> = new ArrayList<>(); // 주원료
+//    private List<> = new ArrayList<>(); // 주원
 }
