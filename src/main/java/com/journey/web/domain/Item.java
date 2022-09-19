@@ -20,9 +20,13 @@ public class Item {
     private Long id;
 
     private String name;
-    private double degree;  // 도수
-    private int size;       // 규격, 사이즈
-    private String company; // 제조사
-
-//    private List<> = new ArrayList<>(); // 주원료
+    private int price;
+    private String info;        // 상품 설명
+    private double degree;      // 도수
+    private int size;           // 규격, 사이즈(ml)
+    private String company;     // 제조사
+    private String material;    // 주원료
+    private String type;        // 주종(탁주 T, 소주 S, 와인 W, 청주 C)
+    private int stockQuantity;  // 재고
+    private String url;         // 이미지 파일 url
 }
