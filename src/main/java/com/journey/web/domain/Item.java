@@ -3,10 +3,7 @@ package com.journey.web.domain;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,4 +26,7 @@ public class Item {
     private String type;        // 주종(탁주 T, 소주 S, 와인 W, 청주 C)
     private int stockQuantity;  // 재고
     private String url;         // 이미지 파일 url
+
+    @ManyToMany(mappedBy = "items")
+    private List<Category> categories = new ArrayList<>();
 }

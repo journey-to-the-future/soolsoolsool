@@ -30,5 +30,9 @@ public class Member {
     @Embedded
     private Address address;
 
+    @OneToMany(mappedBy = "member")
     private List<Order> orders = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    private List<Review> reviews = new ArrayList<>();
 }
