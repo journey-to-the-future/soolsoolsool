@@ -28,10 +28,12 @@ public class ItemService {
         findItem.setStockQuantity(stockQuantity);
     }
 
+    // 전체 상품 목록 조회
     public List<Item> findItems() {
         return itemRepository.findAll();
     }
 
+    // 특정 상품 조회
     public Item findOne(Long itemId) {
         return itemRepository.findOne(itemId);
     }

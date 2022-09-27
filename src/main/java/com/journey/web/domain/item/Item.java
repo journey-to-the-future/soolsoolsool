@@ -14,13 +14,12 @@ import java.util.List;
 @Getter @Setter
 public abstract class Item {
 
-    @Id
-    @GeneratedValue
+    @Id @GeneratedValue
     @Column(name = "item_id")
     private Long id;
 
-    private String name;
-    private int price;
+    private String name;        // 상품 이름
+    private int price;          // 가격
     private String info;        // 상품 설명
     private double degree;      // 도수
     private int size;           // 규격, 사이즈(ml)
@@ -28,7 +27,8 @@ public abstract class Item {
     private String material;    // 주원료
     private String type;        // 주종(탁주 T, 소주 S, 와인 W, 청주 C)
     private int stockQuantity;  // 재고
-    private String image_url;         // 이미지 파일 url
+    private boolean isSoldout;  // 판매여부
+    private String image_url;   // 이미지 파일 url
 
     @ManyToMany(mappedBy = "items")
     private List<Category> categories = new ArrayList<>();
