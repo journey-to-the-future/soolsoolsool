@@ -1,5 +1,6 @@
-package com.journey.web.domain;
+package com.journey.web.domain.item;
 
+import com.journey.web.domain.Category;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,8 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "type")
 @Getter @Setter
-public class Item {
+public abstract class Item {
 
     @Id
     @GeneratedValue
@@ -25,7 +28,7 @@ public class Item {
     private String material;    // 주원료
     private String type;        // 주종(탁주 T, 소주 S, 와인 W, 청주 C)
     private int stockQuantity;  // 재고
-    private String url;         // 이미지 파일 url
+    private String image_url;         // 이미지 파일 url
 
     @ManyToMany(mappedBy = "items")
     private List<Category> categories = new ArrayList<>();

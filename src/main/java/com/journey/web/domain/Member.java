@@ -18,11 +18,14 @@ public class Member {
     @Column(name = "member_id")
     private Long id;
 
+    private String email;           // 회원 id
     private String pwd;
 
-    private String name;
-    private String phone_num;
-    private String email;
+    private String firstname;       // 이름
+    private String lastname;        // 성
+    private String nickname;        // 별명
+
+//    private String phone_num;        // 보류
     private String m_type;           // normal, sales
     private int use_yn;              // 회원 탈퇴여부 (탈퇴 : 0, 가입 : 1)
     private LocalDateTime reg_date;  // 회원 가입일 (default sysdate)
