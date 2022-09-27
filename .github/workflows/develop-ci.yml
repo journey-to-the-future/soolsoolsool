@@ -21,7 +21,7 @@ jobs:
         run: chmod +x gradlew
         
       - name: Build with Gradle
-        run: ./gradlew build
+        run: ./gradlew build -x test
         env:
           DB_HOST: ${{ secrets.DB_HOST }}
           DB_NAME: ${{ secrets.DB_NAME }}
