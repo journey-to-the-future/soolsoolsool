@@ -1,8 +1,8 @@
-name: CI
+name: Develop CI
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "develop" ]
     
 jobs:
   build:
@@ -22,6 +22,12 @@ jobs:
         
       - name: Build with Gradle
         run: ./gradlew build
+        env:
+          DB_HOST: ${{ secrets.DB_HOST }}
+          DB_NAME: ${{ secrets.DB_NAME }}
+          DB_PORT: ${{ secrets.DB_PORT }}
+          DB_USERNAME: ${{ secrets.DB_USERNAME }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
         
       - name: Build and push Docker image
         uses: mr-smithers-excellent/docker-build-push@v5
