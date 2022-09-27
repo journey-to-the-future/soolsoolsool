@@ -1,22 +1,14 @@
 package com.journey.web.api;
 
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 @RestController
-@RequiredArgsConstructor
-public class TestingApiController {
+public class TestApiController {
 
     @GetMapping("/test")
     public String test() {
-
-        return "Testing Successful"
+        return "Test Successful";
     }
-
 }
