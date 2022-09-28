@@ -1,6 +1,5 @@
-package com.journey.web.api;
+package com.journey.web.controller;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
