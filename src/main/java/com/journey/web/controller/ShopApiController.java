@@ -1,7 +1,7 @@
 package com.journey.web.controller;
 
 import com.journey.web.domain.item.Item;
-import com.journey.web.dto.ItemsDto;
+import com.journey.web.dto.item.ItemsDto;
 import com.journey.web.service.ItemService;
 import lombok.AllArgsConstructor;
 import lombok.Data;
