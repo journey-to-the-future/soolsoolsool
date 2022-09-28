@@ -1,4 +1,4 @@
-package com.journey.web.dto;
+package com.journey.web.dto.item;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
