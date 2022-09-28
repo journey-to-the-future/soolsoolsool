@@ -20,13 +20,13 @@ public class MemberController {
 
     private final MemberService memberService;
 
-    @GetMapping("/api/member/{id}")
-    public Result member(@PathVariable("id") Long id) {
-        Member findMember = memberService.findOne(id);
-        List<MemberResponseDto> collect = findMember.
-
-        return new Result(findMember);
-    }
+//    @GetMapping("/api/member/{id}")
+//    public Result member(@PathVariable("id") Long id) {
+//        Member findMember = memberService.findOne(id);
+//        List<MemberResponseDto> collect = findMember.
+//
+//        return new Result(findMember);
+//    }
 
     @Data
     @AllArgsConstructor
