@@ -24,7 +24,7 @@ public class ShopApiController {
 
         List<Item> findItems = itemService.findItems();
         List<ItemsDto> collect = findItems.stream()
-                .map(i -> new ItemsDto(i.getName(), i.getPrice(), i.getCompany(), i.getType(), i.getStockQuantity(), i.getImage_url()))
+                .map(i -> new ItemsDto(i.getName(), i.getPrice(), i.getCompany(), i.getSoolType(), i.getStockQuantity(), i.getImageUrl()))
                 .collect(Collectors.toList());
 
         return new Result(collect);
