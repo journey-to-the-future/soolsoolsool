@@ -21,8 +21,8 @@ public class Item {
     private String name;        // 상품 이름
     private int price;          // 가격
     private String info;        // 상품 설명
-    private String degree;      // 도수
-    private String size;        // 규격, 사이즈(ml)
+    private double degree;      // 도수
+    private int size;           // 규격, 사이즈(ml)
     private String company;     // 제조사
     private String material;    // 주원료
     private String soolType;    // 주종(탁주 T, 소주 S, 와인 W, 청주 C)
