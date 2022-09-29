@@ -1,6 +1,5 @@
 package com.journey.web.domain.item;
 
-import com.journey.web.domain.Category;
 import lombok.Getter;
 import lombok.Setter;
 
