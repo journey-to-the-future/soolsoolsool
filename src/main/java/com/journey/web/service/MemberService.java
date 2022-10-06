@@ -1,6 +1,6 @@
 package com.journey.web.service;
 
-import com.journey.web.domain.Member;
+import com.journey.web.domain.member.Member;
 import com.journey.web.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

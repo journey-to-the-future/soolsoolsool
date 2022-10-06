@@ -12,5 +12,5 @@ public class ItemsDto {
     private String company;     // 제조사
     private String soolType;    // 주종(탁주 T, 소주 S, 와인 W, 청주 C)
     private int stockQuantity;  // 재고
-    private String image_url;
+    private String image_url;   // 이미지 파일 url
 }
