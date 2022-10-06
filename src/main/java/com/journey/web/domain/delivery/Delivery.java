@@ -1,5 +1,7 @@
-package com.journey.web.domain;
+package com.journey.web.domain.delivery;
 
+import com.journey.web.domain.Address;
+import com.journey.web.domain.order.Order;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,7 +11,7 @@ import javax.persistence.*;
 @Getter @Setter
 public class Delivery {
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "delivery_id")
     private  Long id;
 
