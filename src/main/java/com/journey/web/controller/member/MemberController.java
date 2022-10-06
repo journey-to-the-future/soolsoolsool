@@ -1,7 +1,7 @@
 package com.journey.web.controller.member;
 
-import com.journey.web.controller.ItemApiController;
-import com.journey.web.domain.Member;
+//import com.journey.web.controller.ItemApiController;
+//import com.journey.web.domain.Member;
 import com.journey.web.domain.item.Item;
 import com.journey.web.dto.member.MemberResponseDto;
 import com.journey.web.service.MemberService;
