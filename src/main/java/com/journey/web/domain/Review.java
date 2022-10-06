@@ -1,6 +1,7 @@
 package com.journey.web.domain;
 
 import com.journey.web.domain.item.Item;
+import com.journey.web.domain.member.Member;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,7 +12,7 @@ import java.time.LocalDateTime;
 @Getter @Setter
 public class Review {
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "review_id")
     private Long id;
 

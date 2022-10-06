@@ -1,6 +1,6 @@
 package com.journey.web.repository;
 
-import com.journey.web.domain.Member;
+import com.journey.web.domain.member.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -19,6 +19,10 @@ public class MemberRepository {
 
     public Member findOne(Long id) {
         return em.find(Member.class, id);
+    }
+
+    public Member findByNickname(String nickname) {
+        return em.find(Member.class, nickname);
     }
 
     public List<Member> findAll() {

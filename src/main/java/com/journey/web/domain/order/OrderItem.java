@@ -1,4 +1,4 @@
-package com.journey.web.domain;
+package com.journey.web.domain.order;
 
 import com.journey.web.domain.item.Item;
 import lombok.Getter;
