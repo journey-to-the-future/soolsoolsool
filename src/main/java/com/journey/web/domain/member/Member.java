@@ -8,7 +8,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,9 +47,6 @@ public class Member extends BaseEntity {
     @Enumerated(EnumType.STRING)
     @Column(length = 10)
     private MemberStatus memberStatus;
-
-    @Column(updatable = false)
-    private LocalDateTime reg_date;  // 회원 가입일 (default sysdate)
 
     @Embedded
     private Address address;

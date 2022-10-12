@@ -3,7 +3,7 @@ package com.journey.web.domain;
 import javax.persistence.Embeddable;
 
 @Embeddable
-public class Address extends BaseEntity {
+public class Address {
 
     private String city;
     private String street;
