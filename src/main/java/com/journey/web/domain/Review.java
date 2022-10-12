@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @Entity
 @Getter @Setter
@@ -24,7 +23,6 @@ public class Review extends BaseEntity {
     @JoinColumn(name = "item_id")
     private Item item;
 
-    private LocalDateTime date;
     private String review;
     private int point;
     private int star;
