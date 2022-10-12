@@ -1,6 +1,7 @@
 package com.journey.web.domain.member;
 
 import com.journey.web.domain.Address;
+import com.journey.web.domain.BaseEntity;
 import com.journey.web.domain.order.Order;
 import com.journey.web.domain.Review;
 import lombok.Getter;
@@ -14,7 +15,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-public class Member {
+public class Member extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
