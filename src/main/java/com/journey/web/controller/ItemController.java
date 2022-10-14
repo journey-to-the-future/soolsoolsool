@@ -14,14 +14,12 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/item")
 @RestController
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:3000")
 public class ItemController {
 
     private final ItemService itemService;
 
     @ApiOperation(value = "상품 정보 조회", notes = "itemId를 이용하여 상품 정보를 조회")
     @GetMapping("/{id}")
-    @CrossOrigin(origins = "http://localhost:3000")
     public Result item(@PathVariable("id") Long id) {
 
         Item findItem = itemService.findOne(id);
