@@ -7,6 +7,7 @@ import lombok.Data;
 @AllArgsConstructor
 public class ItemsDto {
 
+    private Long id;
     private String name;
     private int price;
     private String company;     // 제조사
