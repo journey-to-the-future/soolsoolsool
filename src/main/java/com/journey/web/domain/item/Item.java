@@ -1,15 +1,16 @@
 package com.journey.web.domain.item;
 
 import com.journey.web.domain.BaseEntity;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
-//@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-//@DiscriminatorColumn(name = "type")
-@Getter @Setter
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Item extends BaseEntity {
 
     @Id
@@ -31,4 +32,23 @@ public class Item extends BaseEntity {
 
 //    @ManyToMany(mappedBy = "items")
 //    private List<Category> categories = new ArrayList<>();
+
+//    public static Item(String name, int price, String info, double degree, int size,
+//                       String company, String material, String soolType, int stockQuantity,
+//                       boolean isSoldout, String imageUrl) {
+//        Item item = Item.builder()
+//                .name(name)
+//                .price(price)
+//                .info(info)
+//                .degree(degree)
+//                .size(size)
+//                .company(company)
+//                .material(material)
+//                .soolType(soolType)
+//                .stockQuantity(stockQuantity)
+//                .build();
+//
+//        return item;
+//    }
+
 }
