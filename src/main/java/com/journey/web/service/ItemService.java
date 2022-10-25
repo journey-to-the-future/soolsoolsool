@@ -1,6 +1,8 @@
 package com.journey.web.service;
 
 import com.journey.web.domain.item.Item;
+import com.journey.web.dto.item.ItemDto;
+import com.journey.web.dto.item.ItemResponseDto;
 import com.journey.web.repository.ItemRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -47,6 +49,17 @@ public class ItemService {
     // 특정 상품 조회
     public Item findOne(Long itemId) {
         return itemRepository.findById(itemId).orElse(null);
+    }
+
+    public ItemResponseDto findById(Long id) {
+        Item entity = itemRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 상품이 없습니다. id=" + id));
+
+        return new ItemResponseDto(entity);
+    }
+
+    public List<ItemDto> listItem() {
+        return itemRepository.getItem();
     }
 
     public Page<Item> list(int page) {
