@@ -1,19 +1,24 @@
 package com.journey.web.controller.member;
 
-//import com.journey.web.controller.ItemApiController;
-//import com.journey.web.domain.Member;
-import com.journey.web.domain.item.Item;
+
+import com.journey.web.domain.member.Member;
 import com.journey.web.dto.member.MemberResponseDto;
+import com.journey.web.dto.member.MemberUpdateDto;
+import com.journey.web.dto.member.MemberUpdateProfileDto;
+import com.journey.web.dto.response.ResponseDto;
 import com.journey.web.service.MemberService;
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import com.journey.web.util.SecurityUtil;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import javax.validation.Valid;
 
+@RequestMapping("/api/v1/member")
 @RestController
 @RequiredArgsConstructor
 public class MemberController {
@@ -22,15 +27,53 @@ public class MemberController {
 
 //    @GetMapping("/api/member/{id}")
 //    public Result member(@PathVariable("id") Long id) {
-//        Member findMember = memberService.findOne(id);
-//        List<MemberResponseDto> collect = findMember.
+//        Member findMember = memberService.findByMemberId(id);
+//        List<MemberResponseDto> collect = findMember..
 //
 //        return new Result(findMember);
 //    }
 
-    @Data
-    @AllArgsConstructor
-    static class Result<T> {
-        private T data;
+    @ApiOperation(value = "회원 프로필 조회", notes = "회원 프로필을 반환합니다.")
+    @GetMapping("/")
+    public ResponseEntity memberProfile() {
+        Long memberId = SecurityUtil.getCurrentMemberId();
+
+        Member member = memberService.findByMemberId(memberId);
+
+        MemberResponseDto memberProfile = MemberResponseDto.builder()
+                .memberId(member.getId())
+                .email(member.getMemberEmail())
+                .firstname(member.getFirstname())
+                .lastname(member.getLastname())
+                .nickname(member.getNickname())
+                .build();
+
+        return new ResponseEntity<ResponseDto>(new ResponseDto<MemberResponseDto>(200, "success",
+                memberProfile), HttpStatus.OK);
+    }
+
+    @ApiOperation(value = "회원 프로필 편집 화면 진입 시 기본 data")
+    @GetMapping("/update")
+    public ResponseEntity<?> memberProfileEdit() {
+        Long memberId = SecurityUtil.getCurrentMemberId();
+        Member member = memberService.findByMemberId(memberId);
+        MemberUpdateProfileDto memberUpdateProfileDto = MemberUpdateProfileDto.builder()
+                .nickName(member.getNickname())
+                .build();
+        return new ResponseEntity<ResponseDto>(new ResponseDto(200, "success", memberUpdateProfileDto)
+                , HttpStatus.OK);
+    }
+
+    @ApiOperation(value = "회원 프로필 수정")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "회원 프로필 수정 완료")
+    })
+    @PutMapping("/")
+    public ResponseEntity memberUpdate(@Valid @RequestPart MemberUpdateDto memberUpdateDto) {
+        Long memberId = SecurityUtil.getCurrentMemberId();
+        memberService.updateMember(memberId, memberUpdateDto);
+
+        return new ResponseEntity<ResponseDto>(new ResponseDto(200, "success", "회원 수정 완료")
+                ,HttpStatus.OK);
     }
 }

@@ -4,16 +4,19 @@ import com.journey.web.domain.Address;
 import com.journey.web.domain.BaseEntity;
 import com.journey.web.domain.order.Order;
 import com.journey.web.domain.Review;
-import lombok.Getter;
-import lombok.Setter;
+import com.journey.web.dto.member.MemberJoinDto;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
 @Getter
+@NoArgsConstructor(access = AccessLevel.PUBLIC)
+@AllArgsConstructor
+@Builder
 @Setter
+@Entity
 public class Member extends BaseEntity {
 
     @Id
@@ -22,7 +25,7 @@ public class Member extends BaseEntity {
     private Long id;
 
     @Column(unique = true, nullable = false, length = 50)
-    private String email;           // 회원 email
+    private String memberEmail;           // 회원 email
 
     @Column(nullable = false, length = 100)
     private String pwd;             // 회원 비밀번호
@@ -56,4 +59,21 @@ public class Member extends BaseEntity {
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<Review> reviews = new ArrayList<>();
+
+    public static Member createMember(MemberJoinDto memberCreateDto) {
+        Member member = Member.builder()
+                .firstname(memberCreateDto.getFirstname())
+                .lastname(memberCreateDto.getLastname())
+                .memberEmail(memberCreateDto.getEmail())
+                .build();
+        return member;
+    }
+
+    public void updateMemberStatus(MemberStatus memberStatus) {
+        this.memberStatus = memberStatus;
+    }
+
+    public void updatePwd(String pwd) {
+        this.pwd = pwd;
+    }
 }

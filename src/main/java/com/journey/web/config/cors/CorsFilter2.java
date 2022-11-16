@@ -1,4 +1,4 @@
-package com.journey.web.config;
+package com.journey.web.config.cors;
 
 
 import org.springframework.core.Ordered;

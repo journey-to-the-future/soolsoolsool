@@ -66,7 +66,7 @@ public class ItemController {
 
     @ApiOperation(value = "상품 리스트 페이징", notes = "최근 등록된 상품순으로 전체 상품 반환")
     @GetMapping("/list/page")
-    public ResponseEntity<> listItemPage() {
+    public ResponseEntity<?> listItemPage() {
 
         return new ResponseEntity<ResponseDto>(
                 new ResponseDto(200, "success", itemService.listItem())
