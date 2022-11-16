@@ -1,20 +1,20 @@
 package com.journey.web.domain.item;
 
-import com.journey.web.domain.Category;
-import lombok.Getter;
-import lombok.Setter;
+import com.journey.web.domain.BaseEntity;
+import lombok.*;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "type")
-@Getter @Setter
-public class Item {
+public class Item extends BaseEntity {
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "item_id")
     private Long id;
 
@@ -25,11 +25,30 @@ public class Item {
     private int size;           // 규격, 사이즈(ml)
     private String company;     // 제조사
     private String material;    // 주원료
-    private String type;        // 주종(탁주 T, 소주 S, 와인 W, 청주 C)
+    private String soolType;    // 주종(탁주 T, 소주 S, 와인 W, 청주 C)
     private int stockQuantity;  // 재고
-    private boolean isSoldout;  // 판매여부
-    private String image_url;   // 이미지 파일 url
+    private boolean isSoldout;  // 판매여부 (품절 : 0, 기본 : 1)
+    private String imageUrl;    // 이미지 파일 url
 
-    @ManyToMany(mappedBy = "items")
-    private List<Category> categories = new ArrayList<>();
+//    @ManyToMany(mappedBy = "items")
+//    private List<Category> categories = new ArrayList<>();
+
+//    public static Item(String name, int price, String info, double degree, int size,
+//                       String company, String material, String soolType, int stockQuantity,
+//                       boolean isSoldout, String imageUrl) {
+//        Item item = Item.builder()
+//                .name(name)
+//                .price(price)
+//                .info(info)
+//                .degree(degree)
+//                .size(size)
+//                .company(company)
+//                .material(material)
+//                .soolType(soolType)
+//                .stockQuantity(stockQuantity)
+//                .build();
+//
+//        return item;
+//    }
+
 }

@@ -7,6 +7,7 @@ import lombok.Data;
 @AllArgsConstructor
 public class ItemDto {
 
+    private Long id;
     private String name;
     private int price;
     private String info;        // 상품 설명
@@ -14,7 +15,7 @@ public class ItemDto {
     private int size;           // 규격, 사이즈(ml)
     private String company;     // 제조사
     private String material;    // 주원료
-    private String type;        // 주종(탁주 T, 소주 S, 와인 W, 청주 C)
+    private String soolType;    // 주종(탁주 T, 소주 S, 와인 W, 청주 C)
     private int stockQuantity;  // 재고
-    private String image_url;   // 이미지 파일 url
+    private String imageUrl;    // 이미지 파일 url
 }

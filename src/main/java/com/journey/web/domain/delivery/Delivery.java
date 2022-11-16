@@ -1,15 +1,19 @@
-package com.journey.web.domain;
+package com.journey.web.domain.delivery;
 
+import com.journey.web.domain.Address;
+import com.journey.web.domain.BaseEntity;
+import com.journey.web.domain.order.Order;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter @Setter
-public class Delivery {
+public class Delivery extends BaseEntity {
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "delivery_id")
     private  Long id;
 
@@ -21,4 +25,6 @@ public class Delivery {
 
     @Enumerated(EnumType.STRING)
     private DeliveryStatus status;      // READY, COMP
+
+    private LocalDateTime deliveryDate;
 }

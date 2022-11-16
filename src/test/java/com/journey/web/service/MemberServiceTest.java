@@ -1,7 +1,8 @@
 package com.journey.web.service;
 
-import com.journey.web.domain.Member;
+import com.journey.web.domain.member.Member;
 import com.journey.web.repository.MemberRepository;
+import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,26 +24,36 @@ public class MemberServiceTest {
     MemberRepository memberRepository;
 
     @Test
+    public void 중복_닉네임_체크() {
+        boolean check = memberService.existsByNickName("kim");
+        Assertions.assertThat(check).isEqualTo(true);
+    }
+
+    @Test
     public void 회원가입() throws Exception {
         //given
         Member member = new Member();
-        member.setName("kim");
+        member.setMemberEmail("kim@naver.com");
+        member.setPwd("1234asfd!");
+        member.setFirstname("kim");
+        member.setLastname("dol");
+        member.setNickname("ironman");
 
         //when
         Long savedId = memberService.join(member);
 
         //then
-        assertEquals(member, memberRepository.findOne(savedId));
+        assertEquals(member, memberRepository.findById(savedId));
     }
 
     @Test(expected = IllegalStateException.class)
-    public void 중복_회원_예외() throws Exception {
+    public void 중복_회원_체크() throws Exception {
         //given
         Member member1 = new Member();
-        member1.setName("kim");
+        member1.setNickname("kim");
 
         Member member2 = new Member();
-        member2.setName("kim");
+        member2.setNickname("kim");
 
         //when
         memberService.join(member1);

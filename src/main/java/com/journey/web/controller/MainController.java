@@ -7,24 +7,26 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@RequestMapping("/api")
 @RestController
 @RequiredArgsConstructor
-public class ShopApiController {
+public class MainController {
 
     private final ItemService itemService;
 
     // 비로그인 유저
-    @GetMapping("/items")
+    @GetMapping("/")
     public Result items() {
 
         List<Item> findItems = itemService.findItems();
         List<ItemsDto> collect = findItems.stream()
-                .map(i -> new ItemsDto(i.getName(), i.getPrice(), i.getCompany(), i.getType(), i.getStockQuantity(), i.getImage_url()))
+                .map(i -> new ItemsDto(i.getId(), i.getName(), i.getPrice(), i.getCompany(), i.getSoolType(), i.getStockQuantity(), i.getImageUrl()))
                 .collect(Collectors.toList());
 
         return new Result(collect);

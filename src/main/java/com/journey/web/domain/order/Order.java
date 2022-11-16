@@ -1,5 +1,8 @@
-package com.journey.web.domain;
+package com.journey.web.domain.order;
 
+import com.journey.web.domain.BaseEntity;
+import com.journey.web.domain.delivery.Delivery;
+import com.journey.web.domain.member.Member;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,9 +14,10 @@ import java.util.List;
 @Entity
 @Table(name = "orders")
 @Getter @Setter
-public class Order {
+public class Order extends BaseEntity {
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "order_id")
     private Long id;
 
