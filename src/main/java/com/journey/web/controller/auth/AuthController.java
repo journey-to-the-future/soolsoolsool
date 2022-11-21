@@ -1,5 +1,6 @@
 package com.journey.web.controller.auth;
 
+import com.journey.web.dto.auth.GoogleLoginDto;
 import com.journey.web.dto.member.MemberJoinDto;
 import com.journey.web.dto.member.MemberLoginDto;
 import com.journey.web.dto.member.MemberNickNameDuplicateDto;
@@ -83,6 +84,13 @@ public class AuthController {
                 token), HttpStatus.OK);
     }
 
+    @PostMapping("/google/login")
+    public ResponseEntity<?> googleLogin(@RequestBody GoogleLoginDto googleLoginDto) {
+        TokenDto token = authService.googleLogin(googleLoginDto.getGoogleIdToken());
+        return new ResponseEntity<ResponseDto>(new ResponseDto<>(200, "로그인 성공",
+                token), HttpStatus.OK);
+    }
+
     @ApiOperation(value = "토큰 재발행", notes = "accessToken 만료 시 재발행 용도입니다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "토큰 재발행 성공"),
@@ -115,7 +123,7 @@ public class AuthController {
             @ApiResponse(code = 200, message = "닉네임 중복 X"),
             @ApiResponse(code = 409, message = "닉네임 중복")
     })
-    @PostMapping("/nickname/")
+    @PostMapping("/nickname/check")
     public ResponseDto checkNickNameDuplication(@RequestBody @Valid MemberNickNameDuplicateDto memberNickNameDuplicateDto
             , BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {

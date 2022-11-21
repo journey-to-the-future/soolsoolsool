@@ -1,6 +1,7 @@
 package com.journey.web.service;
 
 import com.journey.web.config.jwt.TokenProvider;
+import com.journey.web.config.oauth.ClientGoogle;
 import com.journey.web.domain.member.Member;
 import com.journey.web.domain.member.MemberStatus;
 import com.journey.web.dto.member.MemberJoinDto;
@@ -30,7 +31,7 @@ public class AuthService {
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
     private final TokenProvider tokenProvider;
-//    private final ClientGoogle clientGoogle;
+    private final ClientGoogle clientGoogle;
 //    private final AwsS3Service awsS3Service;
 
     /**
@@ -38,7 +39,7 @@ public class AuthService {
      */
     @Transactional
     public MemberJoinResponseDto signup(MemberJoinDto memberJoinDto) {
-        if (memberRepository.existsByMemberEmail(memberJoinDto.getEmail())) {
+        if (memberRepository.existsByMemberEmail(memberJoinDto.getMemberEmail())) {
             throw new CustomException(ErrorCode.ALREADY_SAVED_MEMBER);
         }
 
@@ -102,5 +103,29 @@ public class AuthService {
                 () -> new CustomException(MEMBER_EMAIL_NOT_FOUND));
         member.updatePwd(passwordEncoder.encode(passwordResetDto.getPassword()));
 
+    }
+
+    @Transactional
+    public TokenDto googleLogin(String googleToken) {
+        Member member = clientGoogle.getMember(googleToken);
+        String password = member.getPwd();
+        if (!memberRepository.existsByMemberEmail(member.getMemberEmail())) { // 회원 가입
+            member.setPwd(passwordEncoder.encode(member.getPwd()));
+
+            memberRepository.save(member);
+
+        }
+        Member savedMember = memberRepository.findByMemberEmail(member.getMemberEmail()).
+                orElseThrow(() -> new CustomException(MEMBER_EMAIL_NOT_FOUND));
+        // Token 반환
+        MemberLoginDto googleLoginDto = new MemberLoginDto(member.getMemberEmail(), password);
+        UsernamePasswordAuthenticationToken authenticationToken = googleLoginDto.toAuthentication();
+
+        Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
+
+        TokenDto tokenDto = tokenProvider.generateTokenDto(authentication);
+        savedMember.updateMemberStatus(MemberStatus.ONLINE);
+
+        return tokenDto;
     }
 }
