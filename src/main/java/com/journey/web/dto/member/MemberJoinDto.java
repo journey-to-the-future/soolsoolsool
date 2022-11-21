@@ -23,7 +23,7 @@ public class MemberJoinDto {
 
     @Email
     @NotBlank
-    private String email;
+    private String memberEmail;
 
     @NotBlank
     @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[$@$!%*#?&])[A-Za-z\\d$@$!%*#?&]{6,16}$",
@@ -45,7 +45,7 @@ public class MemberJoinDto {
 
     public Member toMember(PasswordEncoder passwordEncoder) {
         return Member.builder()
-                .memberEmail(email)
+                .memberEmail(memberEmail)
                 .pwd(passwordEncoder.encode(pwd))
                 .memberType(MemberType.ROLE_USER)
                 .memberStatus(MemberStatus.OFFLINE)
@@ -55,10 +55,10 @@ public class MemberJoinDto {
                 .build();
     }
 
-    public Member toGoogleMember(PasswordEncoder passwordEncoder) {
+    public Member toGoogleMember() {
         return Member.builder()
-                .memberEmail(email)
-                .pwd(passwordEncoder.encode(pwd))
+                .memberEmail(memberEmail)
+                .pwd(pwd)
                 .memberType(MemberType.ROLE_USER)
                 .memberStatus(MemberStatus.OFFLINE)
                 .firstname(firstname)
@@ -68,6 +68,6 @@ public class MemberJoinDto {
     }
 
     public UsernamePasswordAuthenticationToken toAuthentication() {
-        return new UsernamePasswordAuthenticationToken(email, pwd);
+        return new UsernamePasswordAuthenticationToken(memberEmail, pwd);
     }
 }

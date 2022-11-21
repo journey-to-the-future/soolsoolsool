@@ -64,7 +64,7 @@ public class Member extends BaseEntity {
         Member member = Member.builder()
                 .firstname(memberCreateDto.getFirstname())
                 .lastname(memberCreateDto.getLastname())
-                .memberEmail(memberCreateDto.getEmail())
+                .memberEmail(memberCreateDto.getMemberEmail())
                 .build();
         return member;
     }
