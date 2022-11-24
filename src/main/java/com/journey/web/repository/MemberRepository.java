@@ -1,38 +1,21 @@
 package com.journey.web.repository;
 
 import com.journey.web.domain.member.Member;
-import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.EntityManager;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
-@RequiredArgsConstructor
-public class MemberRepository {
+public interface MemberRepository extends JpaRepository<Member, Long> {
 
-    private final EntityManager em;
+    List<Member> findAll();
 
-    public void save(Member member) {
-        em.persist(member);
-    }
+    Optional<Member> findByMemberEmail(String memberEmail);
 
-    public Member findOne(Long id) {
-        return em.find(Member.class, id);
-    }
+    boolean existsByMemberEmail(String memberEmail);
 
-    public Member findByNickname(String nickname) {
-        return em.find(Member.class, nickname);
-    }
+    boolean existsByNickname(String nickname);
 
-    public List<Member> findAll() {
-        return em.createQuery("select m from Member m", Member.class)
-                .getResultList();
-    }
-
-    public List<Member> findByEmail(String email) {
-        return em.createQuery("select m from Member m where m.email = :email", Member.class)
-                .setParameter("email", email)
-                .getResultList();
-    }
 }
