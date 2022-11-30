@@ -12,17 +12,15 @@ import java.util.List;
 @AllArgsConstructor
 public class ItemListDto {
 
-    private List<ItemDto> itemDtoList = new ArrayList<>();
-
-    private Long totalPages;
-
-    private Long totalCount;
-
-//    @Builder
-//    public ItemListDto(List<Item> itemList, Long totalPages, Long totalCount) {
-//        this.itemDtoList = ;
-//        this.totalPages = totalPages;
-//        this.totalCount = totalCount;
-//    }
+    private Long id;
+    private String name;
+    private int price;
+    private double degree;      // 도수
+    private int size;           // 규격, 사이즈(ml)
+    private String company;     // 제조사
+    private String material;    // 주원료
+    private String soolType;    // 주종(탁주 T, 소주 S, 와인 W, 청주 C)
+    private int stockQuantity;  // 재고
+    private String imageUrl;    // 이미지 파일 url
 
 }

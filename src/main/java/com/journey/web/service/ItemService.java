@@ -2,16 +2,24 @@ package com.journey.web.service;
 
 import com.journey.web.domain.item.Item;
 import com.journey.web.dto.item.ItemDto;
+import com.journey.web.dto.item.ItemListDto;
 import com.journey.web.dto.item.ItemResponseDto;
+import com.journey.web.dto.item.ItemUpdateDto;
+import com.journey.web.exception.CustomException;
 import com.journey.web.repository.ItemRepository;
+import com.journey.web.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.json.simple.ItemList;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+
+import static com.journey.web.exception.ErrorCode.*;
 
 @Service
 @Transactional(readOnly = true)
@@ -19,31 +27,45 @@ import java.util.List;
 public class ItemService {
 
     private final ItemRepository itemRepository;
+    private final MemberRepository memberRepository;
 
 //    @Transactional
-    public void register(Item item) {
+    public void registerItem(Item item) {
         itemRepository.save(item);
     }
 
-    public void update(Item item) {
-        itemRepository.save(item);
+    @Transactional
+    public void updateItem(ItemUpdateDto itemUpdateDto, Long memberId) {
+        Item item = itemRepository.findById(itemUpdateDto.getItemId())
+                .orElseThrow(() -> new CustomException(ITEM_NOT_FOUND));
+
+        //받아오는 멤버 아이디와 상품 등록 아이디가 같은 경우 수정
+        if(memberId == item.getCreatorId()){
+            item.setName(itemUpdateDto.getUpdateName());
+            item.setPrice(itemUpdateDto.getUpdatePrice());
+            item.setInfo(itemUpdateDto.getUpdateInfo());
+            item.setMaterial(itemUpdateDto.getUpdateMaterial());
+        }else {
+            throw new CustomException(CANNOT_MODIFY_ITEM);
+        }
     }
 
-    public void delete(Long itemId) {
+    @Transactional
+    public void deleteItem(Long itemId) {
         itemRepository.deleteById(itemId);
     }
 
-//    @Transactional
-//    public void updateItem(Long itemId, String name, int price, int stockQuantity) {
-//        Item findItem = itemRepository.findOne(itemId);
-//        findItem.setName(name);
-//        findItem.setPrice(price);
-//        findItem.setStockQuantity(stockQuantity);
-//    }
+    // ------------------------ 상품 조회 관련 ------------------------
 
     // 전체 상품 목록 조회
-    public List<Item> findItems() {
-        return itemRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
+    public List<ItemDto> listItem() {
+        return itemRepository.getItem();
+    }
+
+    // 전체 상품 목록 페이징 하여 조회
+    public List<ItemListDto> getItemByPage(Long id) {
+        Pageable pageable = PageRequest.of(0,10, Sort.by("id").descending());
+        return itemRepository.findItemListDtoPage(id, pageable);
     }
 
     // 특정 상품 조회
@@ -51,18 +73,13 @@ public class ItemService {
         return itemRepository.findById(itemId).orElse(null);
     }
 
-    public ItemResponseDto findById(Long id) {
-        Item entity = itemRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("해당 상품이 없습니다. id=" + id));
+    public ItemResponseDto findById(Long itemId) {
+        Item entity = itemRepository.findById(itemId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 상품이 없습니다. id=" + itemId));
 
         return new ItemResponseDto(entity);
     }
 
-    public List<ItemDto> listItem() {
-        return itemRepository.getItem();
-    }
 
-    public Page<Item> list(int page) {
-        return itemRepository.findAll(PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "id")));
-    }
+
 }

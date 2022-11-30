@@ -19,7 +19,7 @@ public enum ErrorCode {
     INVALID_REFRESH_TOKEN(401, "유효하지 않은 RefreshToken 입니다."),
     INVALID_ACCESS_TOKEN(401, "유효하지 않은 accessToken 입니다."),
     EXPIRED_ACCESS_TOKEN(401, "만료된 accessToken 입니다."),
-//    CANNOT_MODIFY_EMOJI(401, "이모지를 수정할 권한이 없습니다."),
+    CANNOT_MODIFY_ITEM(401, "상품 정보를 수정할 권한이 없습니다."),
 
     MAIL_CODE_ERROR(401, "메일 인증 실패"),
 
@@ -30,6 +30,8 @@ public enum ErrorCode {
     MEMBER_NOT_FOUND(404, "존재하지 않은 회원 ID 입니다."),
     MEMBER_EMAIL_NOT_FOUND(404, "존재하지 않은 이메일입니다."),
     MEMBER_NICKNAME_NOT_FOUND(404, "존재하지 않은 닉네임입니다."),
+    ITEM_NOT_FOUND(404, "존재하지 않는 상품입니다."),
+    ITEM_CART_NOT_FOUND(404, "장바구니에 존재하지 않는 상품입니다."),
 
     //409 CONFLICT 중복된 리소스
     ALREADY_SAVED_MEMBER(409, "이미 가입되어 있는 회원입니다."),

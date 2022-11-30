@@ -1,4 +1,4 @@
-package com.journey.web.controller;
+package com.journey.web.controller.item;
 
 import com.journey.web.domain.item.Item;
 import com.journey.web.dto.item.ItemResponseDto;
@@ -64,12 +64,12 @@ public class ItemController {
         , HttpStatus.OK);
     }
 
-    @ApiOperation(value = "상품 리스트 페이징", notes = "최근 등록된 상품순으로 전체 상품 반환")
+    @ApiOperation(value = "상품 페이징 리스트", notes = "최근 등록된 상품순으로 전체 상품 페이징하여 반환")
     @GetMapping("/list/page")
-    public ResponseEntity<?> listItemPage() {
+    public ResponseEntity<?> listItemByPage(Pageable pageable) {
 
         return new ResponseEntity<ResponseDto>(
-                new ResponseDto(200, "success", itemService.listItem())
+                new ResponseDto(200, "success", itemService.getItemByPage()
         , HttpStatus.OK);
     }
 
