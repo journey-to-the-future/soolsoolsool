@@ -29,6 +29,9 @@ public class ItemService {
     private final ItemRepository itemRepository;
     private final MemberRepository memberRepository;
 
+    /**
+     * 상품 등록, 수정, 삭제
+     */
 //    @Transactional
     public void registerItem(Item item) {
         itemRepository.save(item);
@@ -56,23 +59,24 @@ public class ItemService {
     }
 
     // ------------------------ 상품 조회 관련 ------------------------
-
+    /**
+    * 전체 상품
+    */
     // 전체 상품 목록 조회
     public List<ItemDto> listItem() {
         return itemRepository.getItem();
     }
 
     // 전체 상품 목록 페이징 하여 조회
-    public List<ItemListDto> getItemByPage(Long id) {
+    public List<ItemListDto> getItemByPage() {
         Pageable pageable = PageRequest.of(0,10, Sort.by("id").descending());
-        return itemRepository.findItemListDtoPage(id, pageable);
+        return itemRepository.findItemListDtoPage(pageable);
     }
 
-    // 특정 상품 조회
-    public Item findOne(Long itemId) {
-        return itemRepository.findById(itemId).orElse(null);
-    }
-
+    /**
+     * 특정 상품
+     */
+    // 특정 상품 id로 조회
     public ItemResponseDto findById(Long itemId) {
         Item entity = itemRepository.findById(itemId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 상품이 없습니다. id=" + itemId));
@@ -80,6 +84,14 @@ public class ItemService {
         return new ItemResponseDto(entity);
     }
 
+    // 특정 상품 키워드로 조회
+    public List<ItemListDto> searchItemList(String keyword) {
 
+        return itemRepository.searchItemByName(keyword);
+    }
+
+    /**
+     * 상품 다중 조건 검색
+     */
 
 }
