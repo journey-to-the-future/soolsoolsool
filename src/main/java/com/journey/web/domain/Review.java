@@ -2,16 +2,20 @@ package com.journey.web.domain;
 
 import com.journey.web.domain.item.Item;
 import com.journey.web.domain.member.Member;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
-@Getter @Setter
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 public class Review extends BaseEntity {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "review_id")
     private Long id;
 
@@ -24,6 +28,23 @@ public class Review extends BaseEntity {
     private Item item;
 
     private String review;
-    private int point;
-    private int star;
+    private int starPoint;
+    private Boolean is_favorite;
+
+    public static Review createReview(Member member, Item item) {
+        Review review = Review.builder()
+                .build();
+        review.setMember(member);
+        review.setItem(item);
+        return review;
+    }
+
+//    public void setItem(Item item) {
+//        this.item = item;
+//        item.getMemberItemList().add(this);
+//    }
+
+    public void updateFavorite(boolean is_favorite) {
+        this.is_favorite = is_favorite;
+    }
 }
