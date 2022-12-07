@@ -7,7 +7,7 @@ import lombok.Data;
 @AllArgsConstructor
 public class ItemDto {
 
-    private Long id;
+    private Long itemId;
     private String name;
     private int price;
     private String info;        // 상품 설명

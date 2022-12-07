@@ -8,7 +8,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Builder
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
 @Entity
 public class Item extends BaseEntity {
@@ -29,26 +29,28 @@ public class Item extends BaseEntity {
     private int stockQuantity;  // 재고
     private boolean isSoldout;  // 판매여부 (품절 : 0, 기본 : 1)
     private String imageUrl;    // 이미지 파일 url
+    private Long creatorId;     // 상품 등록한 ID
 
 //    @ManyToMany(mappedBy = "items")
 //    private List<Category> categories = new ArrayList<>();
 
-//    public static Item(String name, int price, String info, double degree, int size,
-//                       String company, String material, String soolType, int stockQuantity,
-//                       boolean isSoldout, String imageUrl) {
-//        Item item = Item.builder()
-//                .name(name)
-//                .price(price)
-//                .info(info)
-//                .degree(degree)
-//                .size(size)
-//                .company(company)
-//                .material(material)
-//                .soolType(soolType)
-//                .stockQuantity(stockQuantity)
-//                .build();
-//
-//        return item;
-//    }
+    public static Item createItem(String name, int price, String info, double degree, int size,
+                       String company, String material, String soolType, int stockQuantity,
+                       boolean isSoldout, String imageUrl, Long creatorId) {
+        Item item = Item.builder()
+                .name(name)
+                .price(price)
+                .info(info)
+                .degree(degree)
+                .size(size)
+                .company(company)
+                .material(material)
+                .soolType(soolType)
+                .stockQuantity(stockQuantity)
+                .creatorId(creatorId)
+                .build();
+
+        return item;
+    }
 
 }
