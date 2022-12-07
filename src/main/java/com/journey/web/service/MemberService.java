@@ -1,25 +1,22 @@
 package com.journey.web.service;
 
+import com.journey.web.domain.Review;
 import com.journey.web.domain.member.Member;
 import com.journey.web.domain.member.MemberStatus;
-import com.journey.web.dto.member.MemberJoinDto;
 import com.journey.web.dto.member.MemberJoinResponseDto;
 import com.journey.web.dto.member.MemberUpdateDto;
 import com.journey.web.exception.CustomException;
-import com.journey.web.exception.ErrorCode;
+import com.journey.web.repository.MemberItemRepository;
 import com.journey.web.repository.MemberRepository;
 import com.journey.web.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
-import static com.journey.web.exception.ErrorCode.MEMBER_NOT_FOUND;
+import static com.journey.web.exception.ErrorCode.*;
 
 @Service
 @Transactional(readOnly = true)
@@ -27,6 +24,7 @@ import static com.journey.web.exception.ErrorCode.MEMBER_NOT_FOUND;
 public class MemberService {
 
     private final MemberRepository memberRepository;
+    private final MemberItemRepository memberItemRepository;
 
     /**
      * 회원 가입
@@ -89,4 +87,12 @@ public class MemberService {
                 .orElseThrow(() -> new CustomException(MEMBER_NOT_FOUND));
     }
 
+    /**
+     * 상품 즐겨찾기 등록 및 해제
+     */
+    @Transactional
+    public void memberItemFavoriteToggle(Long memberId, Long itemId) {
+        Review review = memberItemRepository.findByMemberIdAndItemId(memberId, itemId);
+        review.updateFavorite(!review.getIs_favorite());
+    }
 }

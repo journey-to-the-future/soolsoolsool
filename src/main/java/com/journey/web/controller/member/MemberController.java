@@ -1,10 +1,8 @@
 package com.journey.web.controller.member;
 
-
 import com.journey.web.domain.member.Member;
-import com.journey.web.dto.member.MemberResponseDto;
-import com.journey.web.dto.member.MemberUpdateDto;
-import com.journey.web.dto.member.MemberUpdateProfileDto;
+import com.journey.web.dto.member.*;
+import com.journey.web.dto.item.*;
 import com.journey.web.dto.response.ResponseDto;
 import com.journey.web.service.MemberService;
 import com.journey.web.util.SecurityUtil;
@@ -24,14 +22,6 @@ import javax.validation.Valid;
 public class MemberController {
 
     private final MemberService memberService;
-
-//    @GetMapping("/api/member/{id}")
-//    public Result member(@PathVariable("id") Long id) {
-//        Member findMember = memberService.findByMemberId(id);
-//        List<MemberResponseDto> collect = findMember..
-//
-//        return new Result(findMember);
-//    }
 
     @ApiOperation(value = "회원 프로필 조회", notes = "회원 프로필을 반환합니다.")
     @GetMapping("/")
@@ -74,6 +64,14 @@ public class MemberController {
         memberService.updateMember(memberId, memberUpdateDto);
 
         return new ResponseEntity<ResponseDto>(new ResponseDto(200, "success", "회원 수정 완료")
-                ,HttpStatus.OK);
+                , HttpStatus.OK);
+    }
+
+    @ApiOperation(value = "상품 즐겨찾기 등록 및 해제")
+    @PostMapping("detail/item/favorite")
+    public ResponseEntity<?> myItemFavorite(@RequestBody MemberItemFavoriteReqDto memberItemFavoriteReqDto) {
+        Long memberId = SecurityUtil.getCurrentMemberId();
+        memberService.memberItemFavoriteToggle(memberId, memberItemFavoriteReqDto.getItemId());
+        return new ResponseEntity<ResponseDto>(new ResponseDto(200, "즐겨찾기 토글", null), HttpStatus.OK);
     }
 }
