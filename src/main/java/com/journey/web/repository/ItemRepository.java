@@ -2,37 +2,30 @@ package com.journey.web.repository;
 
 import com.journey.web.domain.item.Item;
 import com.journey.web.dto.item.ItemDto;
-import lombok.RequiredArgsConstructor;
+import com.journey.web.dto.item.ItemListDto;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.EntityManager;
 import java.util.List;
 
 @Repository
 public interface ItemRepository extends JpaRepository<Item, Long> {
 
-    @Query("SELECT i FROM Item i ORDER BY i.id DESC")
+    @Query("select new com.journey.web.dto.item.ItemDto(i.id, i.name, i.price, i.info, i.degree, i.size, i.company, i.material, i.soolType, i.stockQuantity, i.imageUrl)" +
+            "from Item i")
     List<ItemDto> getItem();
 
+    @Query("select new com.journey.web.dto.item.ItemListDto(i.id, i.name, i.price, i.degree, i.size, i.company, i.material, i.soolType, i.stockQuantity, i.imageUrl)" +
+            "from Item i")
+    List<ItemListDto> findItemListDtoPage(Pageable pageable);
 
-//    private final EntityManager em;
-//
-//    public void save(Item item) {
-//        if (item.getId() == null) {
-//            em.persist(item);
-//        } else {
-//            em.merge(item);
-//        }
-//    }
-//
-//    public Item findOne(Long id) {
-//        return em.find(Item.class, id);
-//    }
-//
-//    public List<Item> findAll() {
-//        return em.createQuery("select i from Item i", Item.class)
-//                .getResultList();
-//    }
+    @Query("select count(i.id) from Item i")
+    int findTotal();
+
+    @Query("select new com.journey.web.dto.item.ItemListDto(i.id, i.name, i.price, i.degree, i.size, i.company, i.material, i.soolType, i.stockQuantity, i.imageUrl)" +
+            "from Item i where i.name like %:keyword%")
+    List<ItemListDto> searchItemByName(@Param("keyword") String keyword);
 }
