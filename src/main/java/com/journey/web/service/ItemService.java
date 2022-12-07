@@ -9,11 +9,7 @@ import com.journey.web.exception.CustomException;
 import com.journey.web.repository.ItemRepository;
 import com.journey.web.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
-import org.json.simple.ItemList;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -68,9 +64,12 @@ public class ItemService {
     }
 
     // 전체 상품 목록 페이징 하여 조회
-    public List<ItemListDto> getItemByPage() {
-        Pageable pageable = PageRequest.of(0,10, Sort.by("id").descending());
-        return itemRepository.findItemListDtoPage(pageable);
+    public Page<ItemListDto> getItemByPage(int page, int size) {
+        Pageable pageable = PageRequest.of(page,size, Sort.by("id").descending());
+
+        List<ItemListDto> itemListDtoPage = itemRepository.findItemListDtoPage(pageable);
+        int total = itemRepository.findTotal();
+        return new PageImpl<>(itemListDtoPage, pageable, total);
     }
 
     /**

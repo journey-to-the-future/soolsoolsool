@@ -35,8 +35,8 @@ public class ItemController {
     }
 
     @ApiOperation(value = "상품 정보 조회", notes = "keyword를 이용하여 상품 정보를 조회")
-    @GetMapping("/{keyword}")
-    public ResponseEntity findById (@PathVariable("keyword") String keyword) {
+    @GetMapping("/search/{keyword}")
+    public ResponseEntity findByKeyword (@PathVariable("keyword") String keyword) {
 
         return new ResponseEntity<ResponseDto>(
                 new ResponseDto(200, "success", itemService.searchItemList(keyword)),
@@ -54,10 +54,10 @@ public class ItemController {
 
     @ApiOperation(value = "상품 페이징 리스트", notes = "최근 등록된 상품순으로 전체 상품 페이징하여 반환")
     @GetMapping("/list/page")
-    public ResponseEntity<?> listItemByPage(Pageable pageable) {
+    public ResponseEntity<?> listItemByPage(@RequestParam("page") int page, @RequestParam("size") int size) {
 
         return new ResponseEntity<ResponseDto>(
-                new ResponseDto(200, "success", itemService.getItemByPage()),
+                new ResponseDto(200, "success", itemService.getItemByPage(page, size)),
                 HttpStatus.OK);
     }
 
