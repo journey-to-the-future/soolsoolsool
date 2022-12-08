@@ -1,4 +1,4 @@
-package com.journey.web.repository;
+package com.journey.web.repository.item;
 
 import com.journey.web.domain.item.Item;
 import com.journey.web.dto.item.ItemDto;

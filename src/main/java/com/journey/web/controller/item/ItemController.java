@@ -1,6 +1,7 @@
 package com.journey.web.controller.item;
 
 import com.journey.web.domain.item.Item;
+import com.journey.web.dto.item.ItemListRequestCondition;
 import com.journey.web.dto.item.ItemResponseDto;
 import com.journey.web.dto.response.ResponseDto;
 import com.journey.web.service.ItemService;
@@ -61,5 +62,17 @@ public class ItemController {
                 HttpStatus.OK);
     }
 
+    @ApiOperation(value = "상품 다중 조건 검색", notes = "다중 조건 검색된 상품 목록 반환")
+    @GetMapping("/list/filter")
+    public ResponseEntity listItemByFilter(@RequestParam(required = false) List<String> type,
+                                           @RequestParam(required = false) int price,
+                                           @RequestParam Integer size,
+                                           @RequestParam Integer page) {
 
+        Pageable pageable = Pageable.ofSize(size).withPage(page);
+        ItemListRequestCondition condition = new ItemListRequestCondition(type, price);
+        return new ResponseEntity<ResponseDto>(
+                new ResponseDto(200, "success", itemService.findItemListByFilter(condition, pageable)),
+                HttpStatus.OK);
+    }
 }
