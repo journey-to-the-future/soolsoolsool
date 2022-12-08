@@ -1,13 +1,10 @@
 package com.journey.web.service;
 
 import com.journey.web.domain.item.Item;
-import com.journey.web.dto.item.ItemDto;
-import com.journey.web.dto.item.ItemListDto;
-import com.journey.web.dto.item.ItemResponseDto;
-import com.journey.web.dto.item.ItemUpdateDto;
+import com.journey.web.dto.item.*;
 import com.journey.web.exception.CustomException;
-import com.journey.web.repository.ItemRepository;
-import com.journey.web.repository.MemberRepository;
+import com.journey.web.repository.item.ItemRepository;
+import com.journey.web.repository.member.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
@@ -92,5 +89,12 @@ public class ItemService {
     /**
      * 상품 다중 조건 검색
      */
+    public Page<ItemListDto> findItemListByFilter(ItemListRequestCondition condition, Pageable pageable) {
+        if (condition.getType() != null) {
+            return itemRepository.findItemListByFilter(condition, pageable);
+        } else {
+            return itemRepository.findItemListTypeNull(condition.getType(), pageable);
+        }
+    }
 
 }

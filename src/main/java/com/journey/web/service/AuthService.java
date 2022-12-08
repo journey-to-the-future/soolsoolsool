@@ -12,7 +12,7 @@ import com.journey.web.dto.token.TokenDto;
 import com.journey.web.dto.token.TokenRequestDto;
 import com.journey.web.exception.CustomException;
 import com.journey.web.exception.ErrorCode;
-import com.journey.web.repository.MemberRepository;
+import com.journey.web.repository.member.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
