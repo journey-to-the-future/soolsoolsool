@@ -17,16 +17,7 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
     private ObjectMapper objectMapper = new ObjectMapper();
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException {
-//        log.error(authException.getMessage());
-//        // content -type
-//        response.setContentType("application/json");
-//        response.setCharacterEncoding("utf-8");
-//
-//        ResponseEntity responseEntity = new ResponseEntity<>(new ResponseDto<>(401, "UNAUTHORIZED", "인증X")
-//                , HttpStatus.UNAUTHORIZED);
-//
-//        String result = objectMapper.writeValueAsString(responseEntity);
-//        response.getWriter().write(result);
+        // 유효한 자격증명을 제공하지 않고 접근하려 할때 401
         response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "UnAuthorized");
     }
 }
