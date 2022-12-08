@@ -1,4 +1,4 @@
-package com.journey.web.repository;
+package com.journey.web.repository.member;
 
 import com.journey.web.domain.Review;
 import org.springframework.data.jpa.repository.JpaRepository;

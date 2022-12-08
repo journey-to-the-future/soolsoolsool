@@ -1,7 +1,7 @@
 package com.journey.web.service;
 
 import com.journey.web.domain.member.Member;
-import com.journey.web.repository.MemberRepository;
+import com.journey.web.repository.member.MemberRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.junit.runner.RunWith;
